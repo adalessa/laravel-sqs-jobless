@@ -1,20 +1,13 @@
 <?php
 
-namespace Nollaversio\SQSJobless;
+namespace Adalessa\SQSJobless;
 
 use Aws\Sqs\SqsClient;
-use Illuminate\Support\Arr;
 use Illuminate\Queue\Connectors\SqsConnector;
-use Illuminate\Queue\Connectors\ConnectorInterface;
+use Illuminate\Support\Arr;
 
-class JoblessConnector extends SqsConnector implements ConnectorInterface
+class JoblessConnector extends SqsConnector
 {
-    /**
-     * Establish a queue connection.
-     *
-     * @param  array  $config
-     * @return \Illuminate\Contracts\Queue\Queue
-     */
     public function connect(array $config)
     {
         $config = $this->getDefaultConfiguration($config);
@@ -24,10 +17,10 @@ class JoblessConnector extends SqsConnector implements ConnectorInterface
         }
 
         return new JoblessQueue(
-            new SqsClient($config), $config['queue'], Arr::get($config, 'prefix', '')
+            new SqsClient($config),
+            $config['queue'],
+            Arr::get($config, 'prefix', ''),
+            $config['class']
         );
     }
-
-
 }
-

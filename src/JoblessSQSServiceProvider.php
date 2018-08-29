@@ -1,11 +1,8 @@
 <?php
 
-namespace Nollaversio\SQSJobless;
+namespace Adalessa\SQSJobless;
 
 use Illuminate\Support\ServiceProvider;
-
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Queue\Events\JobProcessed;
 
 class JoblessSQSServiceProvider extends ServiceProvider
 {
@@ -16,9 +13,9 @@ class JoblessSQSServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/sqs-jobless.php' => config_path('sqs-jobless.php')
-        ]);
+        $this->app['queue']->extend('sqs-jobless', function () {
+            return new JoblessConnector();
+        });
     }
 
     /**
@@ -28,13 +25,5 @@ class JoblessSQSServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-         $this->app->booted(function () {
-
-            $this->app['queue']->extend('sqs-jobless', function () {
-               
-                return new JoblessConnector();
-            });
-        });
     }
 }
