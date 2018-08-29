@@ -21,7 +21,7 @@ Update 18.1.18: Kindly developed further by geraldosm, should work on Laravel 5.
 #### Step 1:
 
 ```
-composer require nollaversio/laravel-sqs-jobless
+composer require adalessa/laravel-sqs-jobless
 ```
 **Note!** If you get installation error because of minimum-stability issue, you need to add key-pair *"minimum-stability": "dev"* to your composer.json file.
 
@@ -32,15 +32,10 @@ Add Service Provider
 ```php
 'providers' => [
     // ...
-    'Nollaversio\SQSJobless\JoblessSQSServiceProvider',
+    'Adalessa\SQSJobless\JoblessSQSServiceProvider',
 ];
 ```
 
-#### Step 3:
-
-```
-php artisan vendor:publish
-```
 
 ### Usage
 
@@ -48,7 +43,7 @@ Usage needs four steps:
 
 1. Make sure service provider is added.
 2. Create new record to *config/queue.php*
-3. Create *App/Jobs/JoblessHandler* class
+3. Create *App/Jobs/YourJob* class
 4. Change queue driver to *sqs-jobless*
 5. Start the queue.
 
@@ -58,7 +53,7 @@ Usage needs four steps:
 ```php
 'providers' => [
     // ...
-    'Nollaversio\SQSJobless\JoblessSQSServiceProvider',
+    'Adalessa\SQSJobless\JoblessSQSServiceProvider',
 ];
 
 ```
@@ -75,6 +70,7 @@ Usage needs four steps:
     'prefix' => 'https://sqs.eu-central-1.amazonaws.com/11223344556677',
     'queue' => 'msgs',
     'region' => 'eu-central-1',
+    'class' => \App\Jobs\YourJob::class,
 ], 
 ```
 
@@ -82,7 +78,7 @@ Usage needs four steps:
 
 ```php
 
-// App\Jobs\JoblessHandler.php
+// App\Jobs\YourJob.php
 
 <?php
 
@@ -93,7 +89,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class JoblessHandler implements ShouldQueue
+class YourJob implements ShouldQueue
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
