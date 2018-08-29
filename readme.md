@@ -10,11 +10,6 @@ Because Laravel by default only allows receiving *job messages* from SQS. Those 
 
 This component allows arbitrary SQS messages to be received and handled by the Laravel.
 
-** Works on Laravel 5.3. **
-
-Does not work on Laravel 5.2 or earlier.
-
-Update 18.1.18: Kindly developed further by geraldosm, should work on Laravel 5.5.
 
 ### Install
 
